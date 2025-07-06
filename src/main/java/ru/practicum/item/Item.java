@@ -4,25 +4,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import ru.practicum.user.User;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "items")
-@Getter @Setter @ToString
-class Item {
+@Getter
+@Setter
+@ToString
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String url;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable(name="tags", joinColumns=@JoinColumn(name="item_id"))
     @Column(name="name")
     private Set<String> tags = new HashSet<>();

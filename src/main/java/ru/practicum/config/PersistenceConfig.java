@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@EnableJpaRepositories(basePackages = "ru.practicum")
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "ru.practicum")
 public class PersistenceConfig {
     private final Environment environment;
 
@@ -45,12 +45,15 @@ public class PersistenceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         final HibernateJpaVendorAdapter vendorAdapter =
                 new HibernateJpaVendorAdapter();
+
         final LocalContainerEntityManagerFactoryBean emf =
                 new LocalContainerEntityManagerFactoryBean();
+
         emf.setDataSource(dataSource);
         emf.setJpaVendorAdapter(vendorAdapter);
         emf.setPackagesToScan("ru.practicum");
         emf.setJpaProperties(hibernateProperties());
+
         return emf;
     }
 
